@@ -1,0 +1,27 @@
+from django.shortcuts import HttpResponse
+
+def ejercicio_1(request, usuario):
+
+	salida = '''
+		<html>
+   		...
+  			Hola %s
+		...
+		</html>''' % (usuario)
+
+	return HttpResponse(salida)
+
+# Create your views here.
+
+from django.shortcuts import HttpResponse
+
+def ejercicio_1(request, usuario):
+
+	salida = '''
+		<html>
+   		...
+  			Hola %s
+		...
+		</html>''' % (usuario)
+
+	return HttpResponse(salida)
