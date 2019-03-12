@@ -1,4 +1,4 @@
-from django.shortcuts import HttpResponse
+from django.shortcuts import HttpResponse, render
 import random
 import re, string
 import os
@@ -77,9 +77,9 @@ def ejercicio5(request, entrada):
 	f.close()
 
 	# Eliminamos los signos de puntuación
-	mensaje = re.sub('[%s]' % re.escape(string.punctuation), '', mensaje)
+	mensaje = re.sub('[%s]' % re.escape(string.punctuation), ' ', mensaje)
 	# Tambien debemos de eliminar los saltos de línea que puedan aparecer en el documento
-	mensaje = re.sub('[%s]' % re.escape("\n"), '', mensaje)
+	mensaje = re.sub('[%s]' % re.escape("[\\n]+"), ' ', mensaje)
 	# Separamos cada palabra de tal forma que trabajamos con una lista
 	mensaje = mensaje.split(" ")
 
@@ -105,15 +105,28 @@ def ejercicio5(request, entrada):
 	palabra=mensaje[0]
 	texto=""
 	texto+=palabra
-	for i in range(0,30):
+	final = False
+	while not final:
 		palabra = random.choice(mimic[palabra])
 		texto += " "
 		texto += palabra
 		if (palabra not in mimic or mimic[palabra]==[]):
-			palabra = mensaje[0]
+			final=True
 
 	salida = '''<html>
   			%s
 		    </html>'''%(texto)
 
 	return HttpResponse(salida)
+
+def extract_names(request,filename):
+
+	context={
+		'año':2019,
+		'lista': [
+			{'nombre': 'Alex', 'número':2},
+			{'nombre': 'Juan', 'número':256}
+		]
+	}
+
+	return render(request, 'nombres.html', context)
