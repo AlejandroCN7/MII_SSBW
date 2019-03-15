@@ -1,0 +1,42 @@
+<!--Aquí es donde ponemos todo el html y el código por separado-->
+<html>
+<head>
+  <title>Ejercicio de expresiones regulares</title>
+</head>
+<body>
+
+{% if opcion == 'titulos' or opcion == 'todo' %}
+  <p align="center">
+    <font face="Comic Sans MS,arial,verdana", size=5, color=Green>Títulos Extraídos de ElPais.com</font>
+  </p>
+
+  {% for t in titulos %}
+  <li type="disc">{{ t.titulo }}</li>
+  {% endfor %}
+{% endif %}
+
+{% if opcion == 'imagenes' or opcion == 'todo' %}
+  <pre>
+  <p align="center">
+    <font face="Comic Sans MS,arial,verdana", size=5, color=Green>Imágenes extraídas de ElPais.com</font>
+
+    {% for i in imagenes %}
+    <img src={{ i.imagen }}>
+
+    {% endfor %}
+  </p>
+  </pre>
+{% endif %}
+
+{% if opcion == 'nada'%}
+  <pre>
+  <p align="center">
+    <font face="Comic Sans MS,arial,verdana", size=5, color=Red>Nada que mostrar</font>
+
+    Poner "todo", "titulos" o "imagenes" al final de la url
+  </p>
+  </pre>
+
+{% endif %}
+
+</body>

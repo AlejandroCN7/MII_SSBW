@@ -1,5 +1,7 @@
 from django.shortcuts import HttpResponse, render
 import random
+import re
+import urllib.request
 import re, string
 import os
 
@@ -135,7 +137,7 @@ def ejercicio5(request, entrada):
 
 	return HttpResponse(salida)
 
-def extract_names(request,filename):
+def ejemplo_plantilla(request):
 
 	context={
 		'año':2019,
@@ -145,4 +147,62 @@ def extract_names(request,filename):
 		]
 	}
 
-	return render(request, 'nombres.html', context)
+	return render(request, 'ejemplo.html', context)
+
+def extract_pais(request,opcion):
+
+	url = 'http://ep00.epimg.net/rss/tecnologia/portada.xml'
+
+	respuesta = urllib.request.urlopen(url)
+	contenidoWeb = respuesta.read()
+	contenidoWeb = contenidoWeb.decode('utf-8')
+
+	if(opcion == "titulos" or opcion == "todo"):
+
+		textoTitulos = re.findall(r'<title><\!\[CDATA\[(.+?)\]\]><\/title>', contenidoWeb)
+		titulos = []
+
+		for content in textoTitulos:
+			titulos.append({'titulo': content})
+
+	if (opcion == "imagenes" or opcion == "todo"):
+
+		urlImagenes = re.findall(r'<enclosure url="(.+?)"', contenidoWeb)
+		imagenes = []
+
+		for url in urlImagenes:
+			imagenes.append({'imagen': url})
+
+
+	context={}
+
+	if(opcion=="todo"):
+
+		context = {
+			'opcion': 'todo',
+			'titulos': titulos,
+			'imagenes': imagenes
+		}
+
+	elif(opcion=="titulos"):
+
+		context = {
+			'opcion': 'titulos',
+			'titulos': titulos,
+		}
+
+	elif(opcion=="imagenes"):
+
+		context = {
+			'opcion': 'imagenes',
+			'imagenes': imagenes
+		}
+
+	else:
+		context = {
+			'opcion': 'nada',
+		}
+
+
+	#return HttpResponse(salida)
+	return render(request, 'pais.html', context)
