@@ -1,14 +1,27 @@
 version: '3'
-
 services:
-  db:
-    image: postgres
+  mongo:
+    image: mongo:4.0
+    volumes:
+      - ./datos_db:/data/db
+      - .:/datos
+
+  mongo-express:
+    image: mongo-express
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mongo
+
   web:
+    restart: always
     build: .
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/code
     ports:
       - "8000:8000"
+    links:
+      - mongo
     depends_on:
-      - db
+      - mongo
