@@ -11,4 +11,5 @@ urlpatterns = [
 	path('ejercicio5/<entrada>', views.ejercicio5), # entrada str, ejercicio 5
 	path('ejemplo_plantilla', views.ejemplo_plantilla),
 	path('extract_pais/<opcion>', views.extract_pais),
+	path('ejercicio_pymongo/', views.pymongo),
 	]

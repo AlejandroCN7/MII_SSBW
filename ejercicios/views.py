@@ -1,6 +1,6 @@
 from django.shortcuts import HttpResponse, render
+from pymongo import *
 import random
-import re
 import urllib.request
 import re, string
 import os
@@ -8,6 +8,7 @@ import os
 # Create your views here.
 
 
+#-----------------------------------------------------------------------------------------------------------------------
 # Simplemente muestra un hola mundo en html como respuesta Http
 def hola_mundo(request):
 
@@ -16,8 +17,9 @@ def hola_mundo(request):
 		    </html>''' 
 
 	return HttpResponse(salida)
+#-----------------------------------------------------------------------------------------------------------------------
 
-#
+#-----------------------------------------------------------------------------------------------------------------------
 def ejercicio1(request, lista):
 
 	#Pasamos las cadenas separadas por comas en la url
@@ -35,7 +37,9 @@ def ejercicio1(request, lista):
 		    </html>'''%(str(contador)) 
 
 	return HttpResponse(salida)
+#-----------------------------------------------------------------------------------------------------------------------
 
+#-----------------------------------------------------------------------------------------------------------------------
 def ejercicio2(request, lista):
 
 	# Debemos dar la lista de números separadas por comas también
@@ -47,7 +51,9 @@ def ejercicio2(request, lista):
 		    </html>'''%(str(lista)) 
 	
 	return HttpResponse(salida)
+#-----------------------------------------------------------------------------------------------------------------------
 
+#-----------------------------------------------------------------------------------------------------------------------
 def ejercicio3(request, entrada):
 
 	resultado=""
@@ -62,7 +68,9 @@ def ejercicio3(request, entrada):
 		    </html>'''%(resultado) 
 
 	return HttpResponse(salida)
+#-----------------------------------------------------------------------------------------------------------------------
 
+#-----------------------------------------------------------------------------------------------------------------------
 def ejercicio4(request, entrada):
 
 	#Añadimos nada, ing o ly dependiendo de las condiciones descritas en el ejercicio y devolvemos la respuesta
@@ -78,7 +86,9 @@ def ejercicio4(request, entrada):
 		    </html>'''%(entrada)
 
 	return HttpResponse(salida)
+#-----------------------------------------------------------------------------------------------------------------------
 
+#-----------------------------------------------------------------------------------------------------------------------
 def ejercicio5(request, entrada):
 
 	#Con esto recogemos el archivo desde la misma carpeta en la que se encuentra views.py
@@ -136,7 +146,9 @@ def ejercicio5(request, entrada):
 		    </html>'''%(texto)
 
 	return HttpResponse(salida)
+#-----------------------------------------------------------------------------------------------------------------------
 
+#-----------------------------------------------------------------------------------------------------------------------
 def ejemplo_plantilla(request):
 
 	context={
@@ -148,7 +160,9 @@ def ejemplo_plantilla(request):
 	}
 
 	return render(request, 'ejemplo.html', context)
+#-----------------------------------------------------------------------------------------------------------------------
 
+#-----------------------------------------------------------------------------------------------------------------------
 def extract_pais(request,opcion):
 
 	url = 'http://ep00.epimg.net/rss/tecnologia/portada.xml'
@@ -206,3 +220,36 @@ def extract_pais(request,opcion):
 
 	#return HttpResponse(salida)
 	return render(request, 'pais.html', context)
+#-----------------------------------------------------------------------------------------------------------------------
+
+client = MongoClient('mongo',27017)
+db = client.movies
+pelis = db.pelis
+
+
+def pymongo(request):
+    lista = []
+    lista = pelis.find({}).limit(10)
+    print(pelis.count_documents({}))
+    #print(lista)
+    #for l in lista:
+    #    print(l)
+
+    context = {
+        'lista': lista
+    }
+
+    return render(request,"salida.html",context)
+#-----------------------------------------------------------------------------------------------------------------------
+
+#-----------------------------------------------------------------------------------------------------------------------
+# Consultas con pymongo
+#def PelisQueSale(request,actor):
+
+#	return render(request,"consultaActor.html",context)
+#-----------------------------------------------------------------------------------------------------------------------
+
+#from .models import Pelis
+
+#-----------------------------------------------------------------------------------------------------------------------
+#Consultas con Mongoengine y un formulario (No obligamos al usuario a pedir por medio de url)
