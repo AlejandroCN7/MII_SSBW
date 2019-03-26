@@ -11,10 +11,21 @@
     <title>Consulta de base de datos</title>
   </head>
   <body>
-    <h1>Base datos Películas</h1>
+    <h1 class="display-4">Base datos Películas</h1>
 
+    {% if actor %}
+      {% if resultados == 0 %}
+        <p class="font-italic text-danger">No se han encontrado películas en el que participe tal actor.</p>
+      {% else %}
+        <p class="font-italic text-success">Número de resultados obtenidos: {{ resultados }}</p>
+      {% endif %}
+    {% endif %}
+
+  <div class="table-responsive-md">
   {% block content %}
   {% endblock %}
+  </div>
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

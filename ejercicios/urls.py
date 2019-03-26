@@ -10,6 +10,7 @@ urlpatterns = [
 	path('ejercicio4/<entrada>', views.ejercicio4), # entrada str, añade ing a la entrada, si ya acaba en ing añade ly, si el tamaño es menor que 3 la deja como está
 	path('ejercicio5/<entrada>', views.ejercicio5), # entrada str, ejercicio 5
 	path('ejemplo_plantilla', views.ejemplo_plantilla),
-	path('extract_pais/<opcion>', views.extract_pais),
-	path('ejercicio_pymongo/', views.pymongo),
+	path('extract_pais/<opcion>', views.extract_pais), # Tarea 3
+	path('ejercicio_pymongo/', views.pymongo), # Tarea 4
+	path('pelis que sale/<actor>', views.pelisQueSale), # Parte pymongo de tarea 5
 	]

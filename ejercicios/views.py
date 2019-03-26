@@ -230,7 +230,6 @@ pelis = db.pelis
 def pymongo(request):
     lista = []
     lista = pelis.find({}).limit(10)
-    print(pelis.count_documents({}))
     #print(lista)
     #for l in lista:
     #    print(l)
@@ -244,9 +243,17 @@ def pymongo(request):
 
 #-----------------------------------------------------------------------------------------------------------------------
 # Consultas con pymongo
-#def PelisQueSale(request,actor):
+def pelisQueSale(request,actor):
+	lista = []
+	lista = pelis.find({"actors":{"$in":[actor]}})
 
-#	return render(request,"consultaActor.html",context)
+	context = {
+		'lista': lista,
+		'actor': True,
+		'resultados': lista.count(),
+	}
+
+	return render(request,"salida.html",context)
 #-----------------------------------------------------------------------------------------------------------------------
 
 #from .models import Pelis
