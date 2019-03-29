@@ -11,17 +11,9 @@
     <title>Consulta de base de datos</title>
   </head>
   <body>
-    <h1 class="display-4">Base datos Películas</h1>
+    <h1 class="display-4">Buscador de películas por actor</h1>
 
-    {% if actor %}
-      {% if resultados == 0 %}
-        <p class="font-italic text-danger">No se han encontrado películas relacionadas con la búsqueda.</p>
-      {% else %}
-        <p class="font-italic text-success">Número de resultados obtenidos: {{ resultados }}</p>
-      {% endif %}
-    {% endif %}
-
-  {% block content %}
+  {% block formulario %}
   {% endblock %}
 
 

@@ -1,0 +1,20 @@
+{% extends "Main2.html" %}
+{% block formulario %}
+
+  <form action="procesandoActor" method="post">
+    <div class="row">
+
+      {% csrf_token %}
+      
+      <div class="col">
+        <input name="actor" type="text" class="form-control" id="InputActor" placeholder="Escribe actor">
+      </div>
+
+      <div class="col">
+        <button class="btn btn-primary" type="submit">Buscar</button>
+      </div>
+
+    </div>
+  </form>
+
+{% endblock %}

@@ -1,9 +1,11 @@
-from django.shortcuts import HttpResponse, render
+from django.shortcuts import HttpResponse, render, HttpResponseRedirect
 from pymongo import *
 import random
 import urllib.request
 import re, string
 import os
+import requests
+from django.urls import reverse
 
 # Create your views here.
 
@@ -163,13 +165,50 @@ def ejemplo_plantilla(request):
 #-----------------------------------------------------------------------------------------------------------------------
 
 #-----------------------------------------------------------------------------------------------------------------------
+def extract_titulares(request):
+
+	contenidoWeb=""
+
+	url = 'http://ep00.epimg.net/rss/tags/ultimas_noticias.xml'
+	r = requests.get(url)
+	if(r.status_code==200):
+		contenidoWeb = r.text
+
+	#Esto funciona también para obtener el contenido XML de la url
+	#respuesta = urllib.request.urlopen(url)
+	#contenidoWeb = respuesta.read()
+	#contenidoWeb = contenidoWeb.decode('utf-8')
+
+	textoTitulos = re.findall(r'<title><\!\[CDATA\[(.+?)\]\]><\/title>', contenidoWeb)
+	titulos = []
+
+	for content in textoTitulos:
+		titulos.append({'titulo': content})
+
+
+	context = {
+		'opcion': 'titulos',
+		'titulos': titulos,
+	}
+
+	#return HttpResponse(salida)
+	return render(request, 'pais.html', context)
+#-----------------------------------------------------------------------------------------------------------------------
+
+#-----------------------------------------------------------------------------------------------------------------------
 def extract_pais(request,opcion):
 
-	url = 'http://ep00.epimg.net/rss/tecnologia/portada.xml'
+	contenidoWeb=""
 
-	respuesta = urllib.request.urlopen(url)
-	contenidoWeb = respuesta.read()
-	contenidoWeb = contenidoWeb.decode('utf-8')
+	url = 'http://ep00.epimg.net/rss/tecnologia/portada.xml'
+	r = requests.get(url)
+	if(r.status_code==200):
+		contenidoWeb = r.text
+
+	#Esto funciona también para obtener el contenido XML de la url
+	#respuesta = urllib.request.urlopen(url)
+	#contenidoWeb = respuesta.read()
+	#contenidoWeb = contenidoWeb.decode('utf-8')
 
 	if(opcion == "titulos" or opcion == "todo"):
 
@@ -244,8 +283,9 @@ def pymongo(request):
 #-----------------------------------------------------------------------------------------------------------------------
 # Consultas con pymongo
 def pelisQueSale(request,actor):
+
 	lista = []
-	lista = pelis.find({"actors":{"$in":[actor]}})
+	lista = pelis.find({"actors": {"$regex": actor}})
 
 	context = {
 		'lista': lista,
@@ -256,7 +296,18 @@ def pelisQueSale(request,actor):
 	return render(request,"salida.html",context)
 #-----------------------------------------------------------------------------------------------------------------------
 
-#from .models import Pelis
 
 #-----------------------------------------------------------------------------------------------------------------------
-#Consultas con Mongoengine y un formulario (No obligamos al usuario a pedir por medio de url)
+#Formulario y su posterior procesamiento desde backend
+def formulario(request):
+
+	return render(request,"formulario.html")
+
+def procesandoActor(request):
+
+	actor = request.POST.get('actor')
+
+	return HttpResponseRedirect(reverse('PelisQueSale',args=[actor]))
+
+#-----------------------------------------------------------------------------------------------------------------------
+
