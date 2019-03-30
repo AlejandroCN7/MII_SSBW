@@ -1,0 +1,57 @@
+{% extends "MainVisualizador.html" %}
+{% block datosPelicula %}
+<h1 id="titulo">{{ pelicula.title }} -  {{ pelicula.year }}</h1>
+
+<div class="contenedor">
+
+  <div class="hijo">
+
+    <p style="font-weight: bold"> Director: </p>
+    <p style="margin:25px">* {{ pelicula.director }}</p>
+
+    <p style="font-weight: bold"> Escritor(es): </p>
+    {% for w in pelicula.writers %}
+      <p style="margin:25px">- {{ w }}</p>
+    {% endfor %}
+
+    <p style="font-weight: bold"> Actor(es): </p>
+    {% for a in pelicula.actors %}
+      <p style="margin:25px">- {{ a }}</p>
+    {% endfor %}
+
+  </div>
+
+  <div class="hijo">
+
+    <p style="font-weight: bold"> Puntuación: </p>
+    <p style="margin:25px">{{ pelicula.imdb.rating }}</p>
+
+    <p style="font-weight: bold"> Votaciones: </p>
+    <p style="margin:25px">{{ pelicula.imdb.votes }}</p>
+
+    <p style="font-weight: bold"> Clasificación: </p>
+    <p style="margin:25px">{{ pelicula.rated }}</p>
+
+    <p style="font-weight: bold"> Duración: </p>
+    <p style="margin:25px">{{ pelicula.runtime }} minutos</p>
+
+    <p style="font-weight: bold"> País(es): </p>
+    {% for c in pelicula.countries %}
+      <p style="margin:25px">- {{ c }}</p>
+    {% endfor %}
+
+    <p style="font-weight: bold"> Género(s): </p>
+    {% for g in pelicula.genres %}
+      <p style="margin:25px">- {{ g }}</p>
+    {% endfor %}
+
+  </div>
+
+  <div class="hijo">
+    <p style="font-weight: bold"> Resumen: </p>
+    <p style="margin:25px"> - {{ pelicula.plot }}</p>
+    <p style="margin:50px"> - {{ pelicula.awards.text }}</p>
+  </div>
+
+</div>
+{% endblock %}
