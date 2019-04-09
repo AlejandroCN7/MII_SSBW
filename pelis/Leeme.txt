@@ -1,0 +1,9 @@
+En esta app se ha realizado hasta el momento:
+
+  1.- Ejemplo de hola mundo
+  2.- Consulta con mongoengine con actores que salgan en las pelis, devuelve tabla de pelis que cumplen la consulta (utiliza bootstrap para la tabla)
+  3.- Formulario realizado en Bootstrap para escribir el actor de una forma más elegante y no mediante URL.
+  4.- Visualizador de películas. Una vez que el usuario haga click en una de las
+      películas de la tabla tras la consulta, se genera una url con el id de la
+      película de forma automática. Entonces, se muestra la información de la
+      misma usando solamente CSS (sin Bootstrap).

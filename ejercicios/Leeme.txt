@@ -1,0 +1,10 @@
+En esta app se ha realizado hasta el momento:
+
+  1.- Ejemplo de hola mundo
+  2.- Ejercicios 1, 2, 3, 4 y 5 de la tarea correspondiente
+  3.- Ejemplo de plantilla en html (para familiarizarme)
+  4.- URL para extracción de titulares del PAÍS utilizando expresiones regulares
+  5.- URL para extracción de titulares, imágenes o ambas cosas del PAÍS (como el anterior pero más completo)
+  6.- Ejercicio básico de consulta con pymongo
+  7.- Consulta de pymongo con actores que salgan en las pelis, devuelve tabla de pelis que cumplen la consulta (utiliza bootstrap para la tabla)
+  8.- Formulario realizado en Bootstrap para escribir el actor de una forma más elegante y no mediante URL.
