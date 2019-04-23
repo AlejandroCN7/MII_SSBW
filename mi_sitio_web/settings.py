@@ -16,6 +16,7 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
@@ -37,6 +38,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Para django-allauth
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.github',
+
+    # Mis apps
     'ejercicios',
     'pelis',
 ]
@@ -56,7 +66,10 @@ ROOT_URLCONF = 'mi_sitio_web.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        # Para que me reconozca las plantillas he añadido la <ruta desde BASE_DIR>=templates
+        # Dentro de esta tiene que haber una carpeta llamada account y ya dentro de la misma estarán las plantillas en
+        # sí mismas
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -70,6 +83,50 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'mi_sitio_web.wsgi.application'
+
+LOG_FILE = 'registros.log'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+
+    'formatters': {
+       'verbose': {
+         'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+          'datefmt' : "%d/%b/%Y %H:%M:%S"
+        },
+       'simple': {
+         'format': '%(levelname)s [%(name)s:%(lineno)s] %(message)s'
+           },
+       },
+
+       'handlers': {
+           'file': {
+               'level': 'INFO',
+               'class': 'logging.FileHandler',
+               'filename': os.path.join(BASE_DIR, LOG_FILE),
+               'formatter': 'verbose',
+               'mode':'w'
+            },
+            'console': {
+                'level': 'DEBUG',
+                'class': 'logging.StreamHandler',
+                'formatter': 'simple'
+            }
+        },
+
+        'loggers': {
+            'django': {
+                'handlers':['file'],
+                'propagate': True,
+                'level':'ERROR',
+             },
+             'mi_instagram': {
+                'handlers': ['file', 'console'],
+                 'level': 'DEBUG',
+              },
+          }
+    }
 
 
 # Database
@@ -114,6 +171,20 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+
+# Para especificar que vamos a usar allauth en el back-end y especificamos url de dirección tras login
+#-----------------------------------------------------------------------------------------------------------------------
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
+
+SITE_ID = 1
+
+LOGIN_REDIRECT_URL = 'pelis/crud'
+
+#-----------------------------------------------------------------------------------------------------------------------
 
 
 # Static files (CSS, JavaScript, Images)

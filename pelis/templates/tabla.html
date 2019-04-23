@@ -14,9 +14,9 @@
 
       <tbody>
         {% for l in lista %}
-          <tr  onmouseover="ChangeColor(this, true);"
+          <tr onmouseover="ChangeColor(this, true);"
               onmouseout="ChangeColor(this, false);"
-              onclick="DoNav('http://localhost:8000/pelis/visualizador/{{ l.id }}');">
+              onclick="DoNav('https://localhost/pelis/visualizador/{{ l.id }}');">
             <td>{{ l.title }}</td><td>{{ l.year }}</td>
           </tr>
         {% endfor %}
